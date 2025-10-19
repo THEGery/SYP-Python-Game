@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Oct  9 23:35:41 2025
-
-@author: gerald
-
 This module represents the main submarine - the R.O.V.
-So far it mainly consists of the Submarine class but everything related to the
-main subject, the R.O.V., will be added here.
+So far it mainly consists of the Submarine class but everything
+related to the main subject, the R.O.V., will be added here.
 """
 
 import pygame
 import os
+
 WHITE = (255, 255, 255)
 
 class Submarine(pygame.sprite.Sprite):
-    #This class represents a submarine. It derives from the "Sprite" class in Pygame.
+    """
+    Submarine class; derives from the Sprite class
+    """
     
     def __init__(self, color, width, height, speed):
         # Call the parent class (Sprite) constructor
@@ -22,11 +21,12 @@ class Submarine(pygame.sprite.Sprite):
         
         # Instead we could load a proper pciture of a submarine...
         # self.image = pygame.image.load("submarine.png").convert_alpha()
-        # base_path = os.path.dirname(__file__)
-        # image_path = os.path.join(base_path, "..", "art", "assets", "player", "player.png")
+        # BASE_PATH = os.path.dirname(__file__)
+        # image_path = os.path.join(BASE_PATH, "..",
+        #                           "art", "assets", "player", "player.png")
         # self.image = pygame.image.load(image_path)
         
-        # Pass in the color of the submarine, and its x and y position, width and height.
+        # Pass in color, x and y position, width and height.
         # Set the background color and set it to be transparent
         self.image = pygame.Surface([width, height])
         self.image.fill(WHITE)
@@ -37,28 +37,30 @@ class Submarine(pygame.sprite.Sprite):
         self.height=height
         self.color = color
         self.speed = speed
- 
+         
         # Draw the submarine (a rectangle!)
         pygame.draw.rect(self.image, color, [0, 0, width, height])
- 
-        # Fetch the rectangle object that has the dimensions of the image.
+         
+        # Fetch rectangle object which has the dimensions of the image
         self.rect = self.image.get_rect()
     
-    def moveRight(self, pixels):
+    def move_right(self, pixels):
+        # comment or docstring; rather docstring?
         self.rect.x += pixels
         
-    def moveLeft(self, pixels):
+    def move_left(self, pixels):
         self.rect.x -= pixels
         
-    def moveForward(self, speed):
+    def move_forward(self, speed):
         self.rect.y += self.speed * speed / 20
         
-    def moveBackward(self, speed):
+    def move_backward(self, speed):
         self.rect.y -= self.speed * speed / 20
         
-    def changeSpeed(self, speed):
+    def change_speed(self, speed):
         self.speed = speed
         
     def repaint(self, color):
         self.color = color
-        pygame.draw.rect(self.image, self.color, [0, 0, self.width, self.height])
+        pygame.draw.rect(self.image, self.color,
+                         [0, 0, self.width, self.height])

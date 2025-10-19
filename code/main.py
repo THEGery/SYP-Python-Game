@@ -96,9 +96,9 @@ while carry_on:
 
     # Game Logic
     for obstacle in all_coming_obstacles:
-        obstacle.moveForward(speed)
+        obstacle.move_forward(speed)
         if obstacle.rect.y > SCREENHEIGHT:
-            obstacle.changeSpeed(random.randint(50, 100))
+            obstacle.change_speed(random.randint(50, 100))
             obstacle.repaint(random.choice(color_list))
             obstacle.rect.y = -200
 

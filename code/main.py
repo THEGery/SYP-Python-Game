@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
-"""
-This is the main module where the game starts.
+"""This is the main module where the game starts.
+
 Other modules, classes and functions neccessary for the game are imported and
 can not be run on their own -> start the game here.
 """
 
-import pygame, random
+import pygame
+import random
 # Let's import the Submarine Class
 from submarine import Submarine
 
 pygame.init()
 
 GREEN = (20, 255, 140)
-GREY = (210, 210 ,210)
+GREY = (210, 210, 210)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 PURPLE = (255, 0, 255)
@@ -71,66 +72,66 @@ all_coming_obstacles.add(obstacle_4)
 
 # Allowing the user to close the window...
 carry_on = True
-clock=pygame.time.Clock()
+clock = pygame.time.Clock()
 
 while carry_on:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                carry_on = False
-            elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_x:
-                     carry_on = False
-                     
-        # polling vs event-triggered
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT]:
-            rov.move_left(5)
-        if keys[pygame.K_RIGHT]:
-            rov.move_right(5)
-        if keys[pygame.K_UP]:
-            speed += 0.05
-        if keys[pygame.K_DOWN]:
-            speed -= 0.05
-
-
-        # Game Logic
-        for obstacle in all_coming_obstacles:
-            obstacle.moveForward(speed)
-            if obstacle.rect.y > SCREENHEIGHT:
-                obstacle.changeSpeed(random.randint(50, 100))
-                obstacle.repaint(random.choice(color_list))
-                obstacle.rect.y = -200
-                
-        # Check if there is a obstacle collision
-        obstacle_collision_list = pygame.sprite.spritecollide(
-            rov, all_coming_obstacles,False)
-        for obstacle in obstacle_collision_list:
-            print("obstacle crash!")
-            # End Of Game
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
             carry_on = False
-                
-        all_sprites_list.update()
-        all_coming_obstacles.update()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_x:
+                carry_on = False
 
-        # Drawing on Screen
-        screen.fill(GREEN)
-        # Draw The Road
-        pygame.draw.rect(screen, GREY, [40, 0, 400, SCREENHEIGHT])
-        # Draw Line painting on the road
-        pygame.draw.line(screen, WHITE, [140, 0], [140, SCREENHEIGHT], 5)
-        # Draw Line painting on the road
-        pygame.draw.line(screen, WHITE, [240, 0], [240, SCREENHEIGHT], 5)
-        # Draw Line painting on the road
-        pygame.draw.line(screen, WHITE, [340, 0], [340, SCREENHEIGHT], 5)
+    # polling vs event-triggered
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        rov.move_left(5)
+    if keys[pygame.K_RIGHT]:
+        rov.move_right(5)
+    if keys[pygame.K_UP]:
+        speed += 0.05
+    if keys[pygame.K_DOWN]:
+        speed -= 0.05
 
-        # Actually it's items in the list: player plus 4 others
-        all_sprites_list.draw(screen)
-        all_coming_obstacles.draw(screen)
-        
-        # Refresh Screen
-        pygame.display.flip()
 
-        # Number of frames per secong e.g. 60
-        clock.tick(60)
+    # Game Logic
+    for obstacle in all_coming_obstacles:
+        obstacle.moveForward(speed)
+        if obstacle.rect.y > SCREENHEIGHT:
+            obstacle.changeSpeed(random.randint(50, 100))
+            obstacle.repaint(random.choice(color_list))
+            obstacle.rect.y = -200
+
+    # Check if there is a obstacle collision
+    obstacle_collision_list = pygame.sprite.spritecollide(
+        rov, all_coming_obstacles, False)
+    for obstacle in obstacle_collision_list:
+        print("obstacle crash!")
+        # End Of Game
+        carry_on = False
+
+    all_sprites_list.update()
+    all_coming_obstacles.update()
+
+    # Drawing on Screen
+    screen.fill(GREEN)
+    # Draw The Road
+    pygame.draw.rect(screen, GREY, [40, 0, 400, SCREENHEIGHT])
+    # Draw Line painting on the road
+    pygame.draw.line(screen, WHITE, [140, 0], [140, SCREENHEIGHT], 5)
+    # Draw Line painting on the road
+    pygame.draw.line(screen, WHITE, [240, 0], [240, SCREENHEIGHT], 5)
+    # Draw Line painting on the road
+    pygame.draw.line(screen, WHITE, [340, 0], [340, SCREENHEIGHT], 5)
+
+    # Actually it's items in the list: player plus 4 others
+    all_sprites_list.draw(screen)
+    all_coming_obstacles.draw(screen)
+
+    # Refresh Screen
+    pygame.display.flip()
+
+    # Number of frames per secong e.g. 60
+    clock.tick(60)
 
 pygame.quit()
